@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">skeleton</string>
+    <string name="connection_retry">Tentar novamente</string>
+    <string name="connection_error_snack">Erro de conexão</string>
+</resources>
