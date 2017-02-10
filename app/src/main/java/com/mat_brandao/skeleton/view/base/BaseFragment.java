@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.mat_brandao.skeleton.R;
+import com.mat_brandao.skeleton.domain.di.component.ActivityComponent;
+import com.mat_brandao.skeleton.domain.di.component.DaggerActivityComponent;
+import com.mat_brandao.skeleton.domain.di.module.ActivityModule;
+import com.mat_brandao.skeleton.view.App;
 
 
 /**
@@ -19,6 +24,7 @@ import com.mat_brandao.skeleton.R;
 public abstract class BaseFragment extends Fragment {
 
     private ProgressDialog mProgressDialog;
+    private ActivityComponent mActivityComponent;
 
     @Override
     public void onResume() {
@@ -38,12 +44,20 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
     }
 
-//    @Override public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
 //            setupWindowAnimations();
 //        }
-//    }
+        mActivityComponent = DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(getActivity()))
+                .applicationComponent(((App) getActivity().getApplication()).getComponent())
+                .build();
+    }
+
+    public ActivityComponent getActivityComponent() {
+        return mActivityComponent;
+    }
 
 //    @SuppressLint("NewApi")
 //    private void setupWindowAnimations() {

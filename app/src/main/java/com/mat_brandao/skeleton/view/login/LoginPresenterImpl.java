@@ -18,6 +18,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Inject
     public LoginPresenterImpl(@ActivityContext Context context) {
         this.context = context;
+
     }
 
     @Override
